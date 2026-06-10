@@ -17,7 +17,7 @@ export interface Destination {
 }
 
 // Helper to build Unsplash URL with sizing
-const u = (id: string, w = 2400) =>
+const u = (id: string, w = 1800) =>
   `https://images.unsplash.com/${id}?w=${w}&q=80&auto=format&fit=crop`;
 
 export const destinations: Destination[] = [
@@ -83,7 +83,7 @@ export const destinations: Destination[] = [
     region: 'Suðurland',
     tagline: 'A planet rehearsing other planets.',
     taglineKo: '다른 행성을 연습 중인 행성.',
-    image: u('photo-1539066319230-87f74a8e3e8e'),
+    image: u('photo-1531366936337-7c912a4589a7'),
     accent: '#B8C8D8',
     spec: '오로라 아래, 따뜻한 차 한 잔.',
   },

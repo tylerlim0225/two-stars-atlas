@@ -63,10 +63,13 @@ two-stars-atlas/
 ├─ components/
 │  ├─ LenisProvider.tsx             # 부드러운 스크롤만 담당 (progress publish 안 함)
 │  │
-│  │  ── ACT I: 시네마틱 여행지 패럴랙스 ──
-│  ├─ DestinationsHero.tsx          ★ Opening title + 6개 destination 풀스크린 패럴랙스
-│  │                                  (각 scene: bg image -10%→+12% + scale 1.2→1.07,
-│  │                                  text counter-direction +28%→-28%, opacity fade)
+│  │  ── ACT I: 시네마틱 3D 여행지 비행 ──
+│  ├─ DestinationsHero.tsx          ★ OpeningTitle + 단일 sticky 3D 섹션 (Destinations3DSection)
+│  │                                  + DestinationOverlay (DOM 텍스트, AnimatePresence 크로스페이드)
+│  ├─ DestinationsScene3D.tsx       ★ NEW R3F Canvas — 6개 텍스처 카드를 곡선 경로에 배치,
+│  │                                  카메라가 MotionValue 진행률 따라 그 사이를 비행.
+│  │                                  Suspense per card, drei Stars 배경, bloom + vignette,
+│  │                                  카드마다 frame/halo/reflection 3-레이어
 │  ├─ BridgeSection.tsx             # "But our atlas is closer to home" 시적 전환
 │  │
 │  │  ── ACT II: 개인 별자리 ──
