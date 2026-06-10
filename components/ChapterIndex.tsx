@@ -28,7 +28,7 @@ export default function ChapterIndex() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="pointer-events-none fixed top-1/2 left-6 md:left-10 -translate-y-1/2 z-10 max-w-[240px] md:max-w-[320px]"
+          className="pointer-events-none absolute top-1/2 left-6 md:left-10 -translate-y-1/2 z-10 max-w-[240px] md:max-w-[320px]"
         >
           <div className="text-[10px] tracking-widest3 uppercase text-gold-300/80">
             Constellation · {String(idx + 1).padStart(2, '0')}
@@ -57,7 +57,7 @@ export default function ChapterIndex() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
-          className="pointer-events-none fixed inset-x-0 bottom-24 md:bottom-32 z-10 text-center px-6"
+          className="pointer-events-none absolute inset-x-0 bottom-24 md:bottom-32 z-10 text-center px-6"
         >
           <p className="text-[10px] tracking-widest3 uppercase text-gold-300/70 mb-2">
             End of sheet

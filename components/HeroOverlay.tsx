@@ -14,7 +14,7 @@ export default function HeroOverlay() {
       initial={false}
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="pointer-events-none fixed inset-0 z-10 flex items-center justify-center px-6 text-center"
+      className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 text-center"
     >
       <div>
         <motion.p

@@ -18,7 +18,7 @@ export default function HoverQuote() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="pointer-events-none fixed bottom-24 md:top-1/2 md:right-10 md:bottom-auto md:-translate-y-1/2 z-10 max-w-[280px] md:max-w-[340px] right-6 left-6 md:left-auto"
+          className="pointer-events-none absolute bottom-24 md:top-1/2 md:right-10 md:bottom-auto md:-translate-y-1/2 z-10 max-w-[280px] md:max-w-[340px] right-6 left-6 md:left-auto"
         >
           <div className="text-[10px] tracking-widest3 uppercase text-gold-300/80 mb-2 text-right">
             {m.date}

@@ -16,7 +16,7 @@ export default function SiteFooter() {
       initial={false}
       animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 16 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="pointer-events-none fixed bottom-6 left-6 right-6 z-10 flex flex-wrap items-end justify-between gap-4"
+      className="pointer-events-none absolute bottom-6 left-6 right-6 z-10 flex flex-wrap items-end justify-between gap-4"
     >
       <div className="text-[10px] tracking-widest3 uppercase text-ivory/40">
         Two Stars Atlas · made with 💛

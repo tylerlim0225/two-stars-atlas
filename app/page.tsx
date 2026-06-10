@@ -1,42 +1,22 @@
-'use client';
-
-import dynamic from 'next/dynamic';
-import HeroOverlay from '@/components/HeroOverlay';
-import ChapterIndex from '@/components/ChapterIndex';
-import HoverQuote from '@/components/HoverQuote';
+import DestinationsHero from '@/components/DestinationsHero';
+import BridgeSection from '@/components/BridgeSection';
+import ConstellationExperience from '@/components/ConstellationExperience';
 import MemoryPortal from '@/components/MemoryPortal';
-import ScrollSpacer from '@/components/ScrollSpacer';
-import SiteFooter from '@/components/SiteFooter';
-
-const ConstellationCanvas = dynamic(
-  () => import('@/components/ConstellationCanvas'),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="fixed inset-0 grid place-items-center text-ivory/30 text-[10px] tracking-widest3 uppercase">
-        ✦ drawing the sky ✦
-      </div>
-    ),
-  },
-);
 
 export default function Page() {
   return (
     <>
-      {/* The 3D canvas occupies the viewport, fixed */}
-      <div className="fixed inset-0 z-0">
-        <ConstellationCanvas />
-      </div>
+      {/* Act I — cinematic destinations parallax (the "world worth seeing") */}
+      <DestinationsHero />
 
-      {/* Floating overlays */}
-      <HeroOverlay />
-      <ChapterIndex />
-      <HoverQuote />
+      {/* Transition into our own atlas */}
+      <BridgeSection />
+
+      {/* Act II — our personal constellation (3D star map of trips taken) */}
+      <ConstellationExperience />
+
+      {/* Global modal (works across both acts) */}
       <MemoryPortal />
-      <SiteFooter />
-
-      {/* Scroll body — gives the page actual height so scroll progress works */}
-      <ScrollSpacer />
     </>
   );
 }

@@ -51,29 +51,51 @@
 
 ---
 
-## 구조
+## 구조 (2-Act 구성)
 
 ```
 two-stars-atlas/
 ├─ app/
-│  ├─ layout.tsx           # 폰트 + AtlasProvider + LenisProvider
-│  ├─ globals.css          # 다크 베이스
-│  ├─ page.tsx             # 메인 (시네마틱 별자리)
-│  └─ plan/page.tsx        # PLAN 허브 (트립 카드 그리드) — Phase 4에서 본격 확장
+│  ├─ layout.tsx                    # 폰트 + AtlasProvider + LenisProvider
+│  ├─ globals.css                   # 다크 베이스
+│  ├─ page.tsx                      # DestinationsHero → Bridge → ConstellationExperience + MemoryPortal
+│  └─ plan/page.tsx                 # PLAN 허브 — Phase 4에서 본격 확장
 ├─ components/
-│  ├─ LenisProvider.tsx    # 부드러운 스크롤 + scrollProgress publish
-│  ├─ ConstellationCanvas.tsx ★ R3F 캔버스 (background stars, memory stars, lines, bloom, camera rig)
-│  ├─ HeroOverlay.tsx      # 타이틀, 첫 화면 페이드 (스크롤 시 사라짐)
-│  ├─ ChapterIndex.tsx     # 좌측 사이드, 트립 별 챕터 인덱스
-│  ├─ HoverQuote.tsx       # 별 hover 시 우측 인용구
-│  ├─ MemoryPortal.tsx     # 별 클릭 시 모달 카드 (사진+인용+감정+기억)
-│  ├─ ScrollSpacer.tsx     # 페이지 높이 확보 (3D는 fixed라 자체 높이 0)
-│  └─ SiteFooter.tsx       # 바닥 도달 시 "Plan next constellation" CTA
+│  ├─ LenisProvider.tsx             # 부드러운 스크롤만 담당 (progress publish 안 함)
+│  │
+│  │  ── ACT I: 시네마틱 여행지 패럴랙스 ──
+│  ├─ DestinationsHero.tsx          ★ Opening title + 6개 destination 풀스크린 패럴랙스
+│  │                                  (각 scene: bg image -10%→+12% + scale 1.2→1.07,
+│  │                                  text counter-direction +28%→-28%, opacity fade)
+│  ├─ BridgeSection.tsx             # "But our atlas is closer to home" 시적 전환
+│  │
+│  │  ── ACT II: 개인 별자리 ──
+│  ├─ ConstellationExperience.tsx   ★ 자체 스크롤 섹션 (~400vh) + sticky inner wrap
+│  │                                  useScroll(ref)로 자체 progress 계산 → AtlasContext에 publish
+│  ├─ ConstellationCanvas.tsx       # R3F 캔버스 (별, 라인, 카메라 rig, bloom)
+│  ├─ HeroOverlay.tsx               # 별자리 진입 시 타이틀 (absolute, 섹션 안)
+│  ├─ ChapterIndex.tsx              # 좌측 챕터 표시 (absolute, 섹션 안)
+│  ├─ HoverQuote.tsx                # 별 hover 인용구 (absolute, 섹션 안)
+│  ├─ SiteFooter.tsx                # 끝에서 "Plan next constellation" CTA (absolute, 섹션 안)
+│  │
+│  │  ── 글로벌 ──
+│  └─ MemoryPortal.tsx              # 별 클릭 시 모달 (fixed, 페이지 전체에 작동)
 ├─ lib/
-│  ├─ data.ts              # ★ 모든 콘텐츠 — atlas/trips/memories
-│  ├─ star-layout.ts       # 결정론적 3D 위치 계산 + 카메라 path
-│  └─ atlas-context.tsx    # selectedId / hoveredId / scrollProgress 공유
+│  ├─ data.ts                       # atlas/trips/memories (Act II 콘텐츠)
+│  ├─ destinations.ts               ★ Act I — 6개 destination (Paris/Swiss/Maldives/Rockies/Kyoto/Iceland)
+│  ├─ star-layout.ts                # 결정론적 3D 위치 + cameraPath
+│  └─ atlas-context.tsx             # selectedId / hoveredId / scrollProgress 공유
 ```
+
+**scrollProgress 의미**: 이제 "별자리 섹션 내부 진행률" (0~1). LenisProvider가 publish 안 하고
+ConstellationExperience만 publish함. CameraRig/HeroOverlay/ChapterIndex/SiteFooter가 이 값 소비.
+
+**페이지 전체 흐름**:
+1. Opening title (100vh) — "Worlds Worth Seeing Together"
+2. 6개 destination scenes (600vh) — 풀스크린 사진 + 3-레이어 패럴랙스
+3. Bridge (110vh) — "우리만의 이야기는 더 가까이..."
+4. ConstellationExperience (~400vh) — sticky 3D 별자리
+5. (자연스럽게 끝)
 
 ---
 
@@ -92,7 +114,24 @@ two-stars-atlas/
 
 ## 콘텐츠 수정
 
-### 새 별(추억) 추가
+### 새 destination 추가 (Act I)
+`lib/destinations.ts`의 `destinations: Destination[]`에 객체 추가:
+```ts
+{
+  id: 'unique-slug',
+  name: 'Paris',
+  nameKo: '파리',
+  region: 'Île-de-France · France',
+  tagline: 'A city written in lights.',
+  taglineKo: '빛으로 쓰인 도시.',
+  image: u('photo-XXXX'),         // Unsplash photo ID (CDN hotlink, 무료)
+  accent: '#E8D5A0',
+  spec: '한 줄 메모.',
+}
+```
+> 사진 교체: Unsplash에서 사진 페이지 URL 마지막의 `photo-XXXX` ID만 추출해 `u()`에 넣으세요. API 키 불필요.
+
+### 새 별(추억) 추가 (Act II)
 `lib/data.ts`의 `memories: Memory[]`에 객체 추가:
 ```ts
 {
